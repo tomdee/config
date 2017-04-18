@@ -21,10 +21,12 @@ frontend:
 config:
 
 http:
-  # Uncomment this to add a password (recommended!)
-  # api_password: PASSWORD
-  # Uncomment this if you are using SSL or running in Docker etc
-  # base_url: example.duckdns.org:8123
+  api_password: !secret http_password
+  base_url: ssh.tomdee.co.uk
+  ip_ban_enabled: true
+  login_attempts_threshold: 5
+  ssl_certificate: /etc/letsencrypt/live/ssh.tomdee.co.uk/fullchain.pem
+  ssl_key: /etc/letsencrypt/live/ssh.tomdee.co.uk/privkey.pem
 
 # Checks for available updates
 updater:
@@ -46,10 +48,21 @@ sun:
 
 # Weather Prediction
 sensor:
-  platform: yr
+  - platform: yr
 
 # Text to speech
 tts:
   platform: google
 
 group: !include groups.yaml
+device_tracker:
+  - platform: ubus
+    track_new_devices: yes
+    host: 192.168.10.1
+    username: root
+    password: !secret router_password
+
+apiai:
+  intents:
+    GetTemperature:
+      speech: We have silly degrees
