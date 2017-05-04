@@ -1,0 +1,41 @@
+- platform: mqtt
+  name: "Kitchen Light"
+  state_topic: "home/sonoff/2/stat"
+  command_topic: "home/sonoff/2"
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  retain: true
+- platform: mqtt
+  name: "Oven light"
+  state_topic: "home/sonoff/3/stat"
+  command_topic: "home/sonoff/3"
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  retain: true
+- platform: mqtt
+  name: "Kitchen table light"
+  state_topic: "home/sonoff/4/stat"
+  command_topic: "home/sonoff/4"
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  retain: true
+- platform: mqtt
+  name: "Switch 5"
+  state_topic: "home/sonoff/5/stat"
+  command_topic: "home/sonoff/5"
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  retain: true
+- platform: mqtt
+  name: "Media center"
+  state_topic: "home/sonoff/1/stat"
+  command_topic: "home/sonoff/1"
+  qos: 0
+  payload_on: "on"
+  payload_off: "off"
+  retain: true
+

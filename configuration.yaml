@@ -11,14 +11,12 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Los_Angeles
 
-# Show links to resources in log and frontend
-#introduction:
-
 # Enables the frontend
 frontend:
 
 emulated_hue:
   listen_port: 80
+
 # Enables configuration UI
 config:
 
@@ -50,7 +48,18 @@ sun:
 
 # Weather Prediction
 sensor:
-# Example configuration.yml entry
+
+# Text to speech
+tts:
+  platform: google
+
+# Use built in mqtt server
+mqtt:          
+
+group: !include groups.yaml
+automation: !include automations.yaml
+scene: !include scenes.yaml
+switch: !include switches.yaml
 
 binary_sensor:
   - platform: mqtt
@@ -73,15 +82,10 @@ notify:
     api_key: !secret telegram
     chat_id: 183773916
 
-# Text to speech
-tts:
-  platform: google
-
-group: !include groups.yaml
 device_tracker:
   - platform: ubus
     track_new_devices: no
-    consider_home: 60
+    consider_home: 300
     interval_seconds: 5
     host: 192.168.10.1
     username: root
@@ -98,161 +102,6 @@ apiai:
 #  username: admin
 #  password: !secret foscam_password
 
-scene:
-  - name: Livingroom normal
-    entities:
-        light.living_1:
-            state: on
-            transition: 2
-            brightness: 254
-        light.living_2:
-            state: on
-            transition: 2
-            brightness: 254
-  - name: Livingroom dim
-    entities:
-        light.living_1:
-            state: on
-            transition: 2
-            brightness: 75
-        light.living_2:
-            state: on
-            transition: 2
-            brightness: 75
-
-automation:
-  - alias: "Media player paused/stopped"
-    trigger:
-      - platform: state
-        entity_id: media_player.tv
-        from: 'playing'
-#        to: 'idle'
-    condition:
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
-    action:
-        service: scene.turn_on
-        entity_id: scene.livingroom_normal
-
-  - alias: "Media player playing"
-    trigger:
-      - platform: state
-        entity_id: media_player.tv
-        to: 'playing'
-#        from: 'idle'
-    condition:
-      - condition: state
-        entity_id: sun.sun
-        state: 'below_horizon'
-    action:
-        service: scene.turn_on
-        entity_id: scene.livingroom_dim
-  - alias: Notify Ceava
-    trigger:
-      platform: sun
-      event: sunset
-    action:
-      service: notify.ceava
-      data:
-        message: 'The sun has set'
-  - alias: Notify Tom
-    trigger:
-      platform: sun
-      event: sunset
-    action:
-      service: notify.tom
-      data:
-        message: 'The sun has set'
-  - alias: 'Tom Away'
-    trigger:
-      platform: state
-      entity_id: device_tracker.android95aac635cb042bf5
-      from: 'home'
-      to: 'not_home'
-    action:
-      service: notify.tom
-      data:
-        message: 'Tom has left home'
-  - alias: 'Tom Home'
-    trigger:
-      platform: state
-      entity_id: device_tracker.android95aac635cb042bf5
-      from: 'not_home'
-      to: 'home'
-    action:
-      service: notify.tom
-      data:
-        message: 'Tom is now home'
-  - alias: 'Ceava Away'
-    trigger:
-      platform: state
-      entity_id: device_tracker.moby
-      from: 'home'
-      to: 'not_home'
-    action:
-      service: notify.ceava
-      data:
-        message: 'Ceava has left home'
-  - alias: 'Ceava Home'
-    trigger:
-      platform: state
-      entity_id: device_tracker.moby
-      from: 'not_home'
-      to: 'home'
-    action:
-      service: notify.ceava
-      data:
-        message: 'Ceava is now home'
-mqtt:          
-
-
-
-switch:
-  - platform: mqtt
-    name: "Kitchen Light"
-    state_topic: "home/sonoff/2/stat"
-    command_topic: "home/sonoff/2"
-    qos: 0
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
-  - platform: mqtt
-    name: "Oven light"
-    state_topic: "home/sonoff/3/stat"
-    command_topic: "home/sonoff/3"
-    qos: 0
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
-  - platform: mqtt
-    name: "Kitchen table light"
-    state_topic: "home/sonoff/4/stat"
-    command_topic: "home/sonoff/4"
-    qos: 0
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
-  - platform: mqtt
-    name: "Switch 5"
-    state_topic: "home/sonoff/5/stat"
-    command_topic: "home/sonoff/5"
-    qos: 0
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
-  - platform: mqtt
-    name: "Media center"
-    state_topic: "home/sonoff/1/stat"
-    command_topic: "home/sonoff/1"
-    qos: 0
-    payload_on: "on"
-    payload_off: "off"
-    retain: true
-
-
 # TODO:
 # Add some zones, like home, tom's work and ceava's work
 # Add some scenes like bedtime and morning
-#
-#

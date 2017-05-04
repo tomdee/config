@@ -1,0 +1,83 @@
+- alias: "Media player paused/stopped"
+  trigger:
+    - platform: state
+      entity_id: media_player.tv
+      from: 'playing'
+#        to: 'idle'
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+  action:
+      service: scene.turn_on
+      entity_id: scene.livingroom_normal
+
+- alias: "Media player playing"
+  trigger:
+    - platform: state
+      entity_id: media_player.tv
+      to: 'playing'
+#        from: 'idle'
+  condition:
+    - condition: state
+      entity_id: sun.sun
+      state: 'below_horizon'
+  action:
+      service: scene.turn_on
+      entity_id: scene.livingroom_dim
+- alias: Notify Ceava
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: notify.ceava
+    data:
+      message: 'The sun has set'
+- alias: Notify Tom
+  trigger:
+    platform: sun
+    event: sunset
+  action:
+    service: notify.tom
+    data:
+      message: 'The sun has set'
+- alias: 'Tom Away'
+  trigger:
+    platform: state
+    entity_id: device_tracker.android95aac635cb042bf5
+    from: 'home'
+    to: 'not_home'
+  action:
+    service: notify.tom
+    data:
+      message: 'Tom has left home'
+- alias: 'Tom Home'
+  trigger:
+    platform: state
+    entity_id: device_tracker.android95aac635cb042bf5
+    from: 'not_home'
+    to: 'home'
+  action:
+    service: notify.tom
+    data:
+      message: 'Tom is now home'
+- alias: 'Ceava Away'
+  trigger:
+    platform: state
+    entity_id: device_tracker.moby
+    from: 'home'
+    to: 'not_home'
+  action:
+    service: notify.ceava
+    data:
+      message: 'Ceava has left home'
+- alias: 'Ceava Home'
+  trigger:
+    platform: state
+    entity_id: device_tracker.moby
+    from: 'not_home'
+    to: 'home'
+  action:
+    service: notify.ceava
+    data:
+      message: 'Ceava is now home'
