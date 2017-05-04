@@ -12,10 +12,12 @@ homeassistant:
   time_zone: America/Los_Angeles
 
 # Show links to resources in log and frontend
-introduction:
+#introduction:
 
 # Enables the frontend
 frontend:
+
+emulated_hue:
 
 # Enables configuration UI
 config:
@@ -48,7 +50,28 @@ sun:
 
 # Weather Prediction
 sensor:
-  - platform: yr
+# Example configuration.yml entry
+
+binary_sensor:
+  - platform: mqtt
+    state_topic: "dash/on"
+    name: "On Dash"
+  - platform: mqtt
+    state_topic: "dash/off"
+    name: "Off Dash"
+  - platform: mqtt
+    state_topic: "dash/wellness"
+    name: "Wellness Dash"
+
+notify:
+  - name: tom
+    platform: telegram
+    api_key: !secret telegram
+    chat_id: 170636266
+  - name: ceava
+    platform: telegram
+    api_key: !secret telegram
+    chat_id: 183773916
 
 # Text to speech
 tts:
@@ -57,7 +80,9 @@ tts:
 group: !include groups.yaml
 device_tracker:
   - platform: ubus
-    track_new_devices: yes
+    track_new_devices: no
+    consider_home: 60
+    interval_seconds: 5
     host: 192.168.10.1
     username: root
     password: !secret router_password
@@ -66,3 +91,168 @@ apiai:
   intents:
     GetTemperature:
       speech: We have silly degrees
+
+#camera:
+#  platform: mjpeg
+#  mjpeg_url: http://192.168.10.224/videostream.cgi?user=admin&pwd=09530707&resolution=32&rate=13
+#  username: admin
+#  password: !secret foscam_password
+
+scene:
+  - name: Livingroom normal
+    entities:
+        light.living_1:
+            state: on
+            transition: 2
+            brightness: 254
+        light.living_2:
+            state: on
+            transition: 2
+            brightness: 254
+  - name: Livingroom dim
+    entities:
+        light.living_1:
+            state: on
+            transition: 2
+            brightness: 75
+        light.living_2:
+            state: on
+            transition: 2
+            brightness: 75
+
+automation:
+  - alias: "Media player paused/stopped"
+    trigger:
+      - platform: state
+        entity_id: media_player.tv
+        from: 'playing'
+#        to: 'idle'
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+        service: scene.turn_on
+        entity_id: scene.livingroom_normal
+
+  - alias: "Media player playing"
+    trigger:
+      - platform: state
+        entity_id: media_player.tv
+        to: 'playing'
+#        from: 'idle'
+    condition:
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+    action:
+        service: scene.turn_on
+        entity_id: scene.livingroom_dim
+  - alias: Notify Ceava
+    trigger:
+      platform: sun
+      event: sunset
+    action:
+      service: notify.ceava
+      data:
+        message: 'The sun has set'
+  - alias: Notify Tom
+    trigger:
+      platform: sun
+      event: sunset
+    action:
+      service: notify.tom
+      data:
+        message: 'The sun has set'
+  - alias: 'Tom Away'
+    trigger:
+      platform: state
+      entity_id: device_tracker.android95aac635cb042bf5
+      from: 'home'
+      to: 'not_home'
+    action:
+      service: notify.tom
+      data:
+        message: 'Tom has left home'
+  - alias: 'Tom Home'
+    trigger:
+      platform: state
+      entity_id: device_tracker.android95aac635cb042bf5
+      from: 'not_home'
+      to: 'home'
+    action:
+      service: notify.tom
+      data:
+        message: 'Tom is now home'
+  - alias: 'Ceava Away'
+    trigger:
+      platform: state
+      entity_id: device_tracker.moby
+      from: 'home'
+      to: 'not_home'
+    action:
+      service: notify.ceava
+      data:
+        message: 'Ceava has left home'
+  - alias: 'Ceava Home'
+    trigger:
+      platform: state
+      entity_id: device_tracker.moby
+      from: 'not_home'
+      to: 'home'
+    action:
+      service: notify.ceava
+      data:
+        message: 'Ceava is now home'
+mqtt:          
+
+
+
+switch:
+  - platform: mqtt
+    name: "Kitchen Light"
+    state_topic: "home/sonoff/2/stat"
+    command_topic: "home/sonoff/2"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Switch 3"
+    state_topic: "home/sonoff/3/stat"
+    command_topic: "home/sonoff/3"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Switch 4"
+    state_topic: "home/sonoff/4/stat"
+    command_topic: "home/sonoff/4"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Switch 5"
+    state_topic: "home/sonoff/5/stat"
+    command_topic: "home/sonoff/5"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+  - platform: mqtt
+    name: "Switch 1"
+    state_topic: "home/sonoff/1/stat"
+    command_topic: "home/sonoff/1"
+    qos: 0
+    payload_on: "on"
+    payload_off: "off"
+    retain: true
+
+
+# TODO:
+# Add some zones, like home, tom's work and ceava's work
+# Add some scenes like bedtime and morning
+#
+#

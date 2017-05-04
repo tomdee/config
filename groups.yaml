@@ -1,0 +1,22 @@
+awesome_people:
+  name: Awesome People
+  view: yes
+  entities:
+    - device_tracker.moby
+    - device_tracker.android95aac635cb042bf5
+kitchen:
+  name: Kitchen
+  entities:
+    - light.kitchen 
+bedroom:
+  name: Bed Room
+  entities:
+    - light.bed1
+    - light.bed2
+    - light.wardrobe
+livingroom:
+  name: Living Room
+  entities:
+    - light.living_1
+    - light.living_2
+
