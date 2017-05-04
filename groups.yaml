@@ -7,7 +7,9 @@ awesome_people:
 kitchen:
   name: Kitchen
   entities:
-    - light.kitchen 
+    - switch.kitchen_light
+    - switch.oven_light
+    - switch.kitchen_table_light
 bedroom:
   name: Bed Room
   entities:
@@ -19,4 +21,5 @@ livingroom:
   entities:
     - light.living_1
     - light.living_2
+    - light.living_3
 

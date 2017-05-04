@@ -18,7 +18,7 @@ homeassistant:
 frontend:
 
 emulated_hue:
-
+  listen_port: 80
 # Enables configuration UI
 config:
 
@@ -218,7 +218,7 @@ switch:
     payload_off: "off"
     retain: true
   - platform: mqtt
-    name: "Switch 3"
+    name: "Oven light"
     state_topic: "home/sonoff/3/stat"
     command_topic: "home/sonoff/3"
     qos: 0
@@ -226,7 +226,7 @@ switch:
     payload_off: "off"
     retain: true
   - platform: mqtt
-    name: "Switch 4"
+    name: "Kitchen table light"
     state_topic: "home/sonoff/4/stat"
     command_topic: "home/sonoff/4"
     qos: 0
@@ -242,7 +242,7 @@ switch:
     payload_off: "off"
     retain: true
   - platform: mqtt
-    name: "Switch 1"
+    name: "Media center"
     state_topic: "home/sonoff/1/stat"
     command_topic: "home/sonoff/1"
     qos: 0
