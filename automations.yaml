@@ -1,4 +1,5 @@
-- alias: "On Dash"
+- id: my_rule1
+  alias: "On Dash"
   initial_state: True 
   trigger:
     - platform: mqtt
@@ -7,7 +8,8 @@
       service: scene.turn_on
       entity_id: scene.everything_on
 
-- alias: "Off Dash"
+- id: my_rule2
+  alias: "Off Dash"
   initial_state: True 
   trigger:
     - platform: mqtt
@@ -16,7 +18,8 @@
       service: scene.turn_on
       entity_id: scene.everything_off
 
-- alias: "Media player paused/stopped"
+- id: my_rule3
+  alias: "Media player paused/stopped"
   initial_state: True 
   trigger:
     - platform: state
@@ -31,7 +34,8 @@
       service: scene.turn_on
       entity_id: scene.livingroom_normal
 
-- alias: "Media player playing"
+- id: my_rule4
+  alias: "Media player playing"
   initial_state: True 
   trigger:
     - platform: state
@@ -45,15 +49,9 @@
   action:
       service: scene.turn_on
       entity_id: scene.livingroom_dim
-- alias: Notify Ceava
-  trigger:
-    platform: sun
-    event: sunset
-  action:
-    service: notify.ceava
-    data:
-      message: 'The sun has set'
-- alias: Notify Tom
+
+- id: my_rule5
+  alias: Notify Tom
   trigger:
     platform: sun
     event: sunset
@@ -61,7 +59,9 @@
     service: notify.tom
     data:
       message: 'The sun has set'
-- alias: 'Tom Away'
+
+- id: my_rule6
+  alias: 'Tom Away'
   initial_state: True 
   trigger:
     platform: state
@@ -72,7 +72,10 @@
     service: notify.tom
     data:
       message: 'Tom has left home'
-- alias: 'Tom Home'
+
+  
+- id: my_rule7
+  alias: 'Tom Home'
   initial_state: True 
   trigger:
     platform: state
@@ -82,8 +85,10 @@
   action:
     service: switch.turn_on
     entity_id: switch.kitchen_light  
+  
+- id: my_rule8
 - alias: 'Ceava Away'
-  initial_state: True 
+  initial_state: False
   trigger:
     platform: state
     entity_id: device_tracker.moby
@@ -93,8 +98,10 @@
     service: notify.ceava
     data:
       message: 'Ceava has left home'
-- alias: 'Ceava Home'
-  initial_state: True 
+
+- id: my_rule9
+  alias: 'Ceava Home'
+  initial_state: False
   trigger:
     platform: state
     entity_id: device_tracker.moby

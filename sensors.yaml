@@ -1,52 +1,19 @@
   - platform: mqtt  
     state_topic: "bruh/sensornode1"  
-    name: "SN1 Humidity"  
+    name: "Bathroom Humidity"  
     unit_of_measurement: "%"  
     value_template: '{{ value_json.humidity | round(1) }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode1"  
-    name: "SN1 LDR"
+    name: "Bathroom LDR"
     ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
     unit_of_measurement: "LUX"  
     value_template: '{{ value_json.ldr }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode1"  
-    name: "SN1 PIR"  
-    value_template: '{{ value_json.motion }}'  
-  
-  - platform: mqtt  
-    state_topic: "bruh/sensornode1"  
-    name: "SN1 Temperature"  
-    unit_of_measurement: "°F"  
-    value_template: '{{ value_json.temperature | round(1) }}'  
-
-
-
-
-
-  - platform: mqtt  
-    state_topic: "bruh/sensornode2"  
-    name: "SN2 Humidity"  
-    unit_of_measurement: "%"  
-    value_template: '{{ value_json.humidity | round(1) }}'  
-  
-  - platform: mqtt  
-    state_topic: "bruh/sensornode2"  
-    name: "SN2 LDR"
-    ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
-    unit_of_measurement: "LUX"  
-    value_template: '{{ value_json.ldr }}'  
-  
-  - platform: mqtt  
-    state_topic: "bruh/sensornode2"  
-    name: "SN2 PIR"  
-    value_template: '{{ value_json.motion }}'  
-  
-  - platform: mqtt  
-    state_topic: "bruh/sensornode2"  
-    name: "SN2 Temperature"  
+    name: "Bathroom Temperature"  
     unit_of_measurement: "°F"  
     value_template: '{{ value_json.temperature | round(1) }}'  
 
@@ -56,25 +23,25 @@
 
   - platform: mqtt  
     state_topic: "bruh/sensornode3"  
-    name: "SN3 Humidity"  
+    name: "Livingroom Humidity"  
     unit_of_measurement: "%"  
     value_template: '{{ value_json.humidity | round(1) }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode3"  
-    name: "SN3 LDR"
-    ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
+    name: "Livingroom LDR"
+    ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1033.
     unit_of_measurement: "LUX"  
     value_template: '{{ value_json.ldr }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode3"  
-    name: "SN3 PIR"  
+    name: "Livingroom PIR"  
     value_template: '{{ value_json.motion }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode3"  
-    name: "SN3 Temperature"  
+    name: "Livingroom Temperature"  
     unit_of_measurement: "°F"  
     value_template: '{{ value_json.temperature | round(1) }}'  
 
@@ -83,27 +50,28 @@
 
 
 
+
   - platform: mqtt  
     state_topic: "bruh/sensornode4"  
-    name: "SN4 Humidity"  
+    name: "Closet Humidity"  
     unit_of_measurement: "%"  
     value_template: '{{ value_json.humidity | round(1) }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode4"  
-    name: "SN4 LDR"
+    name: "Closet LDR"
     ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
     unit_of_measurement: "LUX"  
     value_template: '{{ value_json.ldr }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode4"  
-    name: "SN4 PIR"  
+    name: "Closet PIR"  
     value_template: '{{ value_json.motion }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode4"  
-    name: "SN4 Temperature"  
+    name: "Closet Temperature"  
     unit_of_measurement: "°F"  
     value_template: '{{ value_json.temperature | round(1) }}'  
 
@@ -113,24 +81,24 @@
 
   - platform: mqtt  
     state_topic: "bruh/sensornode5"  
-    name: "SN5 Humidity"  
+    name: "Kitchen Humidity"  
     unit_of_measurement: "%"  
     value_template: '{{ value_json.humidity | round(1) }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode5"  
-    name: "SN5 LDR"
+    name: "Kitchen LDR"
     ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
     unit_of_measurement: "LUX"  
     value_template: '{{ value_json.ldr }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode5"  
-    name: "SN5 PIR"  
+    name: "Kitchen PIR"  
     value_template: '{{ value_json.motion }}'  
   
   - platform: mqtt  
     state_topic: "bruh/sensornode5"  
-    name: "SN5 Temperature"  
+    name: "Kitchen Temperature"  
     unit_of_measurement: "°F"  
     value_template: '{{ value_json.temperature | round(1) }}'  
