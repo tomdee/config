@@ -1,4 +1,23 @@
+- alias: "On Dash"
+  initial_state: True 
+  trigger:
+    - platform: mqtt
+      topic: dash/on
+  action:
+      service: scene.turn_on
+      entity_id: scene.everything_on
+
+- alias: "Off Dash"
+  initial_state: True 
+  trigger:
+    - platform: mqtt
+      topic: dash/off
+  action:
+      service: scene.turn_on
+      entity_id: scene.everything_off
+
 - alias: "Media player paused/stopped"
+  initial_state: True 
   trigger:
     - platform: state
       entity_id: media_player.tv
@@ -13,6 +32,7 @@
       entity_id: scene.livingroom_normal
 
 - alias: "Media player playing"
+  initial_state: True 
   trigger:
     - platform: state
       entity_id: media_player.tv
@@ -42,6 +62,7 @@
     data:
       message: 'The sun has set'
 - alias: 'Tom Away'
+  initial_state: True 
   trigger:
     platform: state
     entity_id: device_tracker.android95aac635cb042bf5
@@ -52,16 +73,17 @@
     data:
       message: 'Tom has left home'
 - alias: 'Tom Home'
+  initial_state: True 
   trigger:
     platform: state
     entity_id: device_tracker.android95aac635cb042bf5
     from: 'not_home'
     to: 'home'
   action:
-    service: notify.tom
-    data:
-      message: 'Tom is now home'
+    service: switch.turn_on
+    entity_id: switch.kitchen_light  
 - alias: 'Ceava Away'
+  initial_state: True 
   trigger:
     platform: state
     entity_id: device_tracker.moby
@@ -72,6 +94,7 @@
     data:
       message: 'Ceava has left home'
 - alias: 'Ceava Home'
+  initial_state: True 
   trigger:
     platform: state
     entity_id: device_tracker.moby

@@ -4,6 +4,12 @@ awesome_people:
   entities:
     - device_tracker.moby
     - device_tracker.android95aac635cb042bf5
+#everything:
+#  name: Everything
+#  entities:
+#    - group.kitchen
+#    - group.bedroom
+#    - group.livingroom
 kitchen:
   name: Kitchen
   entities:

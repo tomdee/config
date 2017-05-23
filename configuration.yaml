@@ -17,6 +17,12 @@ frontend:
 emulated_hue:
   listen_port: 80
 
+# Example configuration.yaml entry
+logger:
+  default: warning
+  logs:
+    homeassistant.components.mqtt: debug
+
 # Enables configuration UI
 config:
 
@@ -46,9 +52,7 @@ logbook:
 # Track the sun
 sun:
 
-# Weather Prediction
-sensor:
-
+  
 # Text to speech
 tts:
   platform: google
@@ -60,6 +64,7 @@ group: !include groups.yaml
 automation: !include automations.yaml
 scene: !include scenes.yaml
 switch: !include switches.yaml
+sensor: !include sensors.yaml 
 
 binary_sensor:
   - platform: mqtt

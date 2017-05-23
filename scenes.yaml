@@ -8,6 +8,10 @@
           state: on
           transition: 2
           brightness: 254
+      light.living_3:
+          state: on
+          transition: 2
+          brightness: 254
 - name: Livingroom dim
   entities:
       light.living_1:
@@ -18,4 +22,30 @@
           state: on
           transition: 2
           brightness: 75
+      light.living_3:
+          state: on
+          transition: 2
+          brightness: 75
+- name: Everything Off
+  entities:
+      group.all_switches:
+          state: off
+      group.bedroom:
+          state: off
+          transition: 1
+      group.livingroom:
+          state: off
+          transition: 1
+- name: Everything On
+  entities:
+      group.all_switches:
+          state: on
+      group.bedroom:
+          state: on
+          transition: 1
+          brightness: 254
+      group.livingroom:
+          state: on
+          transition: 1
+          brightness: 254
 
