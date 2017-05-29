@@ -15,7 +15,7 @@
   payload_off: "off"
   retain: true
 - platform: mqtt
-  name: "Kitchen table light"
+  name: "Closet light"
   state_topic: "home/sonoff/4/stat"
   command_topic: "home/sonoff/4"
   qos: 0
@@ -23,7 +23,7 @@
   payload_off: "off"
   retain: true
 - platform: mqtt
-  name: "Switch 5"
+  name: "Kitchen counter light"
   state_topic: "home/sonoff/5/stat"
   command_topic: "home/sonoff/5"
   qos: 0

@@ -1,31 +1,78 @@
 awesome_people:
-  name: Awesome People
-  view: yes
+  name: People
   entities:
-    - device_tracker.moby
-    - device_tracker.android95aac635cb042bf5
-#everything:
-#  name: Everything
-#  entities:
-#    - group.kitchen
-#    - group.bedroom
-#    - group.livingroom
+  - device_tracker.android95aac635cb042bf5
+  - device_tracker.moby
+  view: false
 kitchen:
   name: Kitchen
   entities:
-    - switch.kitchen_light
-    - switch.oven_light
-    - switch.kitchen_table_light
+  - switch.kitchen_light
+  - switch.oven_light
+  - switch.kitchen_counter_light
+  - sensor.kitchen_pir
+  - sensor.kitchen_ldr
+  - sensor.kitchen_temperature
+  - sensor.kitchen_humidity
 bedroom:
   name: Bed Room
   entities:
-    - light.bed1
-    - light.bed2
-    - light.wardrobe
+  - light.bed1
+  - light.bed2
+  - light.wardrobe
+closet:
+  name: Closet
+  entities:
+  - switch.closet_light
+  - sensor.closet_pir
+  - sensor.closet_ldr
+  - sensor.closet_temperature
+  - sensor.closet_humidity
 livingroom:
   name: Living Room
   entities:
-    - light.living_1
-    - light.living_2
-    - light.living_3
-
+  - light.living_1
+  - light.living_2
+  - light.living_3
+  - switch.media_center
+  - sensor.livingroom_pir
+  - sensor.livingroom_ldr
+  - sensor.livingroom_temperature
+  - sensor.livingroom_humidity
+bathroom:
+  name: Bath Room
+  entities:
+  - sensor.bathroom_ldr
+  - sensor.bathroom_temperature
+  - sensor.bathroom_humidity
+weather:
+  name: Weather
+  entities:
+  - sensor.dark_sky_summary
+  - sensor.dark_sky_hourly_summary
+  - sensor.dark_sky_minutely_summary
+  - sensor.dark_sky_daily_summary
+  - sun.sun
+  - sensor.dark_sky_temperature
+  - sensor.dark_sky_apparent_temperature
+  - sensor.dark_sky_dew_point
+  - sensor.dark_sky_humidity
+  - sensor.dark_sky_wind_speed
+  - sensor.dark_sky_cloud_coverage
+  - sensor.dark_sky_pressure
+  view: false
+Network:
+  view: true
+  entities:
+  - group.network_status
+Network Status:
+  entities:
+  - sensor.internet_speed_in
+  - sensor.internet_speed_out
+  - sensor.wan_traffic_in_mean
+  - sensor.wan_traffic_out_mean
+  - sensor.router_free_cpu
+  - sensor.router_free_ram
+  - sensor.speedtest_download
+  - sensor.speedtest_upload
+  - sensor.speedtest_ping

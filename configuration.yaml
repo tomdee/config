@@ -11,17 +11,115 @@ homeassistant:
   # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
   time_zone: America/Los_Angeles
 
+  customize:
+    light.bed1:
+      emulated_hue: true
+    light.bed2:
+      emulated_hue: true
+    light.living_1:
+      emulated_hue: true
+    light.living_2:
+      emulated_hue: true
+    light.living_3:
+      emulated_hue: true
+    light.wardrobe:
+      emulated_hue: true
+    switch.closet_light:
+      emulated_hue: true
+      icon: mdi:lightbulb
+    switch.kitchen_counter_light:
+      emulated_hue: true
+      icon: mdi:lightbulb
+    switch.kitchen_light:
+      emulated_hue: true
+      icon: mdi:lightbulb
+    switch.oven_light:
+      emulated_hue: true
+      icon: mdi:lightbulb
+    switch.media_center:
+      emulated_hue: true
+      icon: mdi:television
+    script.tv:
+      emulated_hue: true
+      icon: mdi:television
+    group.kitchen:
+      emulated_hue: true
+    group.closet:
+      emulated_hue: true
+    group.livingroom:
+      emulated_hue: true
+    group.bedroom:
+      emulated_hue: true
+
+    sensor.download_speed_mean:
+      friendly_name: 'Speedtest Download Average'
+      icon: mdi:speedometer
+
+    sensor.upload_speed_mean:
+      friendly_name: 'Spedtest Upload Average'
+      icon: mdi:speedometer
+
+    sensor.ping_time_mean:
+      friendly_name: 'Speedtest Ping Average'
+      icon: mdi:clock-fast
+
+    sensor.wan_traffic_in_mean:
+      friendly_name: 'WAN Download Average'
+      icon: mdi:download
+
+    sensor.snmp_wan_in:
+      hidden: true
+    sensor.snmp_wan_out:
+      hidden: true
+    binary_sensor.off_dash:
+      hidden: true
+    binary_sensor.on_dash:
+      hidden: true
+    binary_sensor.wellness_dash:
+      hidden: true
+
+    sensor.wan_traffic_out_mean:
+      friendly_name: 'WAN Upload Average'
+      icon: mdi:upload
+
+
+
+    sensor.router_free_cpu:
+      friendly_name: 'Router Free CPU'
+      icon: mdi:chart-areaspline
+    sensor.router_free_ram:
+      friendly_name: 'Router Free RAM'
+      icon: mdi:memory
+
+    input_slider.internet_traffic_delta_in:
+      hidden: true
+    input_slider.internet_traffic_delta_out:
+      hidden: true
+
+input_slider:
+  internet_traffic_delta_in:
+    name: "Traffic IN Delta"
+    initial: 0
+    min: 0
+    max: 1000000000000
+
+  internet_traffic_delta_out:
+   name: "Traffic OUT Delta"
+   initial: 0
+   min: 0
+   max: 1000000000000
+
 # Enables the frontend
 frontend:
 
 emulated_hue:
   listen_port: 80
-
+  expose_by_default: false
 # Example configuration.yaml entry
 logger:
   default: warning
-  logs:
-    homeassistant.components.mqtt: debug
+#  logs:
+#    homeassistant.components.mqtt: debug
 
 # Enables configuration UI
 config:
@@ -30,7 +128,7 @@ http:
   api_password: !secret http_password
   base_url: ssh.tomdee.co.uk
   ip_ban_enabled: true
-  login_attempts_threshold: 5
+  login_attempts_threshold: 50
   ssl_certificate: /etc/letsencrypt/live/ssh.tomdee.co.uk/fullchain.pem
   ssl_key: /etc/letsencrypt/live/ssh.tomdee.co.uk/privkey.pem
 
@@ -77,15 +175,22 @@ binary_sensor:
     state_topic: "dash/wellness"
     name: "Wellness Dash"
 
+
+telegram_bot:
+  platform: polling
+  api_key: !secret telegram
+  allowed_chat_ids:
+    - 170636266
+    - 183773916
+
 notify:
   - name: tom
     platform: telegram
-    api_key: !secret telegram
     chat_id: 170636266
   - name: ceava
     platform: telegram
-    api_key: !secret telegram
     chat_id: 183773916
+
 
 device_tracker:
   - platform: ubus
@@ -100,6 +205,30 @@ apiai:
   intents:
     GetTemperature:
       speech: We have silly degrees
+
+shell_command:
+  tv: "curl http://remote/ir?code=100334085"
+  soundbar: curl http://remote/ir\?code\=16712445 && sleep 3 && curl http://remote/ir\?code\=16749420
+
+script:
+  tv:
+    sequence:
+      - service: switch.turn_on
+        data: 
+          entity_id: switch.media_center
+      - delay: 00:00:05
+      - service: shell_command.tv
+      - service: shell_command.soundbar
+      - service: scene.turn_on
+        data: 
+          entity_id: scene.livingroom_normal
+  toggle_tv:
+    sequence:
+      - service: shell_command.tv
+  toggle_soundbar:
+    sequence:
+      - service: shell_command.soundbar
+
 
 #camera:
 #  platform: mjpeg
