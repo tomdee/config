@@ -1,55 +1,49 @@
 - id: my_rule1
-  alias: "On Dash"
-  initial_state: True 
+  alias: On Dash
+  initial_state: true
   trigger:
-    - platform: mqtt
-      topic: dash/on
+  - platform: mqtt
+    topic: dash/on
   action:
-      service: scene.turn_on
-      entity_id: scene.everything_on
-
+    service: scene.turn_on
+    entity_id: scene.everything_on
 - id: my_rule2
-  alias: "Off Dash"
-  initial_state: True 
+  alias: Off Dash
+  initial_state: true
   trigger:
-    - platform: mqtt
-      topic: dash/off
+  - platform: mqtt
+    topic: dash/off
   action:
-      service: scene.turn_on
-      entity_id: scene.everything_off
-
+    service: scene.turn_on
+    entity_id: scene.everything_off
 - id: my_rule3
-  alias: "Media player paused/stopped"
-  initial_state: True 
+  alias: Media player paused/stopped
+  initial_state: true
   trigger:
-    - platform: state
-      entity_id: media_player.tv
-      from: 'playing'
-#        to: 'idle'
+  - platform: state
+    entity_id: media_player.tv
+    from: playing
   condition:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
   action:
-      service: scene.turn_on
-      entity_id: scene.livingroom_normal
-
+    service: scene.turn_on
+    entity_id: scene.livingroom_normal
 - id: my_rule4
-  alias: "Media player playing"
-  initial_state: True 
+  alias: Media player playing
+  initial_state: true
   trigger:
-    - platform: state
-      entity_id: media_player.tv
-      to: 'playing'
-#        from: 'idle'
+  - platform: state
+    entity_id: media_player.tv
+    to: playing
   condition:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
+  - condition: state
+    entity_id: sun.sun
+    state: below_horizon
   action:
-      service: scene.turn_on
-      entity_id: scene.livingroom_dim
-
+    service: scene.turn_on
+    entity_id: scene.livingroom_dim
 - id: my_rule5
   alias: Notify Tom
   trigger:
@@ -58,83 +52,120 @@
   action:
     service: notify.tom
     data:
-      message: 'The sun has set'
-
+      message: The sun has set
 - id: my_rule6
-  alias: 'Tom Away'
-  initial_state: True 
+  alias: Tom Away
+  initial_state: true
   trigger:
     platform: state
     entity_id: device_tracker.android95aac635cb042bf5
-    from: 'home'
-    to: 'not_home'
+    from: home
+    to: not_home
   action:
     service: notify.tom
     data:
-      message: 'Tom has left home'
-
-  
+      message: Tom has left home
 - id: my_rule7
-  alias: 'Tom Home'
-  initial_state: True 
+  alias: Tom Home
+  initial_state: true
   trigger:
     platform: state
     entity_id: device_tracker.android95aac635cb042bf5
-    from: 'not_home'
-    to: 'home'
+    from: not_home
+    to: home
   action:
     service: switch.turn_on
-    entity_id: switch.kitchen_light  
-  
+    entity_id: switch.kitchen_light
 - id: my_rule8
-  alias: 'Ceava Away'
-  initial_state: False
+  alias: Ceava Away
+  initial_state: false
   trigger:
     platform: state
     entity_id: device_tracker.moby
-    from: 'home'
-    to: 'not_home'
+    from: home
+    to: not_home
   action:
     service: notify.ceava
     data:
-      message: 'Ceava has left home'
-
+      message: Ceava has left home
 - id: my_rule9
-  alias: 'Ceava Home'
-  initial_state: False
+  alias: Ceava Home
+  initial_state: false
   trigger:
     platform: state
     entity_id: device_tracker.moby
-    from: 'not_home'
-    to: 'home'
+    from: not_home
+    to: home
   action:
     service: notify.ceava
     data:
-      message: 'Ceava is now home'
-
-
+      message: Ceava is now home
 - id: monitor2
   alias: Monitor Traffic
-
   trigger:
     platform: state
     entity_id: sensor.snmp_wan_in
-
   action:
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.internet_traffic_delta_in
-        value: '{{ ((trigger.to_state.state | int - trigger.from_state.state | int) * 8 ) / ( as_timestamp(trigger.to_state.last_updated) - as_timestamp(trigger.from_state.last_updated) ) }}'
-
+  - service: input_slider.select_value
+    data_template:
+      entity_id: input_slider.internet_traffic_delta_in
+      value: '{{ ((trigger.to_state.state | int - trigger.from_state.state | int)
+        * 8 ) / ( as_timestamp(trigger.to_state.last_updated) - as_timestamp(trigger.from_state.last_updated)
+        ) }}'
 - id: monitor1
   alias: Monitor Traffic
-
   trigger:
     platform: state
     entity_id: sensor.snmp_wan_out
-
   action:
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.internet_traffic_delta_out
-        value: '{{ ((trigger.to_state.state | int - trigger.from_state.state | int) * 8 ) / ( as_timestamp(trigger.to_state.last_updated) - as_timestamp(trigger.from_state.last_updated) ) }}'        
+  - service: input_slider.select_value
+    data_template:
+      entity_id: input_slider.internet_traffic_delta_out
+      value: '{{ ((trigger.to_state.state | int - trigger.from_state.state | int)
+        * 8 ) / ( as_timestamp(trigger.to_state.last_updated) - as_timestamp(trigger.from_state.last_updated)
+        ) }}'
+- action:
+  - data:
+      entity_id: switch.closet_light
+    service: switch.turn_on
+  alias: Closet Lights
+  id: '1496025613228'
+  trigger:
+  - entity_id: sensor.closet_pir
+    from: standby
+    platform: state
+    to: motion detected
+
+- alias: Turn on kitchen light when there is movement
+  id: '912873918273'
+  trigger:
+    platform: state
+    entity_id: sensor.kitchen_pir
+    state: 'motion detected'
+  action:
+    service: switch.turn_on
+    entity_id: switch.kitchen_counter_light
+
+- alias: Turn off kitchen light 10 minutes after last movement
+  id: '182736812631'
+  trigger:
+    platform: state
+    entity_id: sensor.kitchen_pir
+    state: 'standby'
+    for:
+      minutes: 10
+  action:
+    service: switch.turn_off
+    entity_id: switch.kitchen_counter_light
+
+- alias: Turn off close light 10 minutes after last movement
+  id: '182736812631122'
+  trigger:
+    platform: state
+    entity_id: sensor.closet_pir
+    state: 'standby'
+    for:
+      minutes: 10
+  action:
+    service: switch.turn_off
+    entity_id: switch.closet_light
