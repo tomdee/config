@@ -114,6 +114,9 @@ frontend:
 
 emulated_hue:
   listen_port: 80
+  # Don't include "script" in the off maps to on domain since I say "turn off all the lights" and I don't wont that to turn things on
+  off_maps_to_on_domains:
+    - scene
   expose_by_default: false
 # Example configuration.yaml entry
 logger:
