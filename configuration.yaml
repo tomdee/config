@@ -109,6 +109,10 @@ input_slider:
    min: 0
    max: 1000000000000
 
+influxdb:
+  include:
+    domains:
+      - sensor
 # Enables the frontend
 frontend:
 
