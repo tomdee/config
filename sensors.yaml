@@ -170,3 +170,19 @@
     - daily_summary
 
     update_interval: '00:10'
+
+  - platform: influxdb
+    
+    queries:
+      - name: bedroom.temperature
+        database: tomdee
+        where: '"room" = ''bedroom'''
+        measurement: '"temperature"'   
+        unit_of_measurement: '°F'
+        value_template: '{{ (( float(value) * 9 / 5 )  +  32) | round(1) }}'
+      - name: bedroom.humidity
+        database: tomdee
+        where: '"room" = ''bedroom'''
+        value_template: '{{ float(value) | round(1) }}'
+        measurement: '"humidity"'   
+        unit_of_measurement: '%'

@@ -20,6 +20,8 @@ bedroom:
   - light.bed1
   - light.bed2
   - light.wardrobe
+  - sensor.bedroomtemperature
+  - sensor.bedroomhumidity
 closet:
   name: Closet
   entities:
